@@ -57,7 +57,7 @@ class GlacierBackup:
         )
 
         self.rotate(file_copy, extension)
-        # self.upload_to_glacier()
+        # self.upload_to_glacier(self.args.vault, file)
 
     def compress(self, file):
         with lzma.open(file + '.xz', 'w') as outfile:
@@ -65,11 +65,11 @@ class GlacierBackup:
                 outfile.write(infile.read().encode('utf-8'))
         return file + '.xz'
 
-    def upload_to_glacier(self):
+    def upload_to_glacier(self, vault, file):
         archive_id = self.glacier_client.upload_archive(
-            vaultName=self.args.vault,
+            vaultName=vault,
             archiveDescription='Test',
-            body=self.args.file + '.xz'
+            body=file
         )
         print('Uploaded archive: ', archive_id)
 
