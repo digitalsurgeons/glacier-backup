@@ -2,7 +2,8 @@
 
 from argparse import ArgumentParser
 from shutil import copyfile
-from os.path import normpath, isdir
+from os.path import normpath, isdir, basename
+from os import remove
 import boto3
 import lzma
 import tarfile
@@ -45,6 +46,8 @@ class GlacierBackup:
         self.glacier_client = boto3.client('glacier')
 
     def backup(self):
+        to_delete = []
+
         # Tar it up if its a directory
         if isdir(self.args.file):
             file = self.args.file + '.tar'
@@ -52,6 +55,7 @@ class GlacierBackup:
             with tarfile.open(file, "w") as tar:
                 tar.add(self.args.file)
                 tar.close()
+            to_delete.append(file)
         else:
             file = self.args.file
             extension = ''
@@ -60,14 +64,19 @@ class GlacierBackup:
         if self.args.compress:
             file = self.compress(file)
             extension += '.xz'
+            to_delete.append(file)
 
         file_copy = copyfile(
             file,
-            normpath(self.args.destination + '/' + file)
+            normpath(self.args.destination + '/' + basename(file))
         )
 
         self.rotate(file_copy, extension)
         # self.upload_to_glacier(self.args.vault, file)
+
+        # Clean up
+        for working_file in to_delete:
+            remove(working_file)
 
     def compress(self, file):
         with lzma.open(file + '.xz', 'w') as outfile:
