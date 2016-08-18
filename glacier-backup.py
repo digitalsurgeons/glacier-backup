@@ -3,6 +3,8 @@
 from argparse import ArgumentParser
 import boto3
 import lzma
+from archive_rotator import rotator
+from archive_rotator.algorithms import TieredRotator
 
 
 class GlacierBackup:
@@ -43,6 +45,9 @@ class GlacierBackup:
             body=self.args.file + '.xz'
         )
         print('Uploaded archive: ', archive_id)
+
+    def rotate(self, path, extension):
+        rotator.rotate(TieredRotator(7, 4, 12), path, extension, verbose=True)
 
 backup = GlacierBackup()
 backup.backup()
