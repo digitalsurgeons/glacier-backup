@@ -47,7 +47,12 @@ class GlacierBackup:
         print('Uploaded archive: ', archive_id)
 
     def rotate(self, path, extension):
-        rotator.rotate(TieredRotator(7, 4, 12), path, extension, verbose=True)
+        rotator.rotate(
+            TieredRotator([7, 4, 12], verbose=True),
+            path,
+            extension,
+            verbose=True
+        )
 
 backup = GlacierBackup()
 backup.backup()
