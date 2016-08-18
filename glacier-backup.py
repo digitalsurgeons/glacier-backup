@@ -2,9 +2,10 @@
 
 from argparse import ArgumentParser
 from shutil import copyfile
-from os.path import normpath
+from os.path import normpath, isdir
 import boto3
 import lzma
+import tarfile
 from archive_rotator import rotator
 from archive_rotator.algorithms import TieredRotator
 
@@ -44,12 +45,21 @@ class GlacierBackup:
         self.glacier_client = boto3.client('glacier')
 
     def backup(self):
-        if self.args.compress:
-            file = self.compress(self.args.file)
-            extension = '.xz'
+        # Tar it up if its a directory
+        if isdir(self.args.file):
+            file = self.args.file + '.tar'
+            extension = '.tar'
+            with tarfile.open(file, "w") as tar:
+                tar.add(self.args.file)
+                tar.close()
         else:
             file = self.args.file
             extension = ''
+
+        # Compress it if asked to
+        if self.args.compress:
+            file = self.compress(file)
+            extension += '.xz'
 
         file_copy = copyfile(
             file,
@@ -61,7 +71,7 @@ class GlacierBackup:
 
     def compress(self, file):
         with lzma.open(file + '.xz', 'w') as outfile:
-            with open(self.args.file, 'r') as infile:
+            with open(file, 'r') as infile:
                 outfile.write(infile.read().encode('utf-8'))
         return file + '.xz'
 
