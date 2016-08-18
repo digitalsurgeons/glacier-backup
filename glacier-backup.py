@@ -80,8 +80,8 @@ class GlacierBackup:
 
     def compress(self, file):
         with lzma.open(file + '.xz', 'w') as outfile:
-            with open(file, 'r') as infile:
-                outfile.write(infile.read().encode('utf-8'))
+            with open(file, 'rb') as infile:
+                outfile.write(infile.read())
         return file + '.xz'
 
     def upload_to_glacier(self, vault, file):
