@@ -1,0 +1,2 @@
+archive-rotator
+boto3
