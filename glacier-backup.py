@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 from argparse import ArgumentParser
+from shutil import copyfile
+from os.path import normpath
 import boto3
 import lzma
 from archive_rotator import rotator
@@ -45,17 +47,26 @@ class GlacierBackup:
         self.parser.print_help()
 
     def backup(self):
-        bytes = self.get_target_bytes()
-        self.create_archive(bytes)
-        self.upload_to_glacier()
+        if self.args.compress:
+            file = self.compress(self.args.file)
+            extension = '.xz'
+        else:
+            file = self.args.file
+            extension = ''
 
-    def get_target_bytes(self):
-        with open(self.args.file, 'r') as infile:
-            return infile.read().encode('utf-8')
+        file_copy = copyfile(
+            file,
+            normpath(self.args.destination + '/' + file)
+        )
 
-    def create_archive(self, bytes):
-        with lzma.open(self.args.file + '.xz', 'w') as outfile:
-            outfile.write(bytes)
+        self.rotate(file_copy, extension)
+        # self.upload_to_glacier()
+
+    def compress(self, file):
+        with lzma.open(file + '.xz', 'w') as outfile:
+            with open(self.args.file, 'r') as infile:
+                outfile.write(infile.read().encode('utf-8'))
+        return file + '.xz'
 
     def upload_to_glacier(self):
         archive_id = self.glacier_client.upload_archive(
