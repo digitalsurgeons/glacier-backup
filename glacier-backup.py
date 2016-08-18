@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 import boto3
-import os
 import lzma
 
 
@@ -8,7 +7,6 @@ class GlacierBackup:
 
     def __init__(self):
         self.setup_parser()
-        self.get_aws_credentials()
         self.setup_glacier_client()
 
     def setup_parser(self):
@@ -19,11 +17,6 @@ class GlacierBackup:
 
     def setup_glacier_client(self):
         self.glacier_client = boto3.client('glacier')
-
-    def get_aws_credentials(self):
-        self.access_key_id = os.environ['AWS_ACCESS_KEY_ID']
-        self.secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
-        self.default_region = os.environ['AWS_DEFAULT_REGION']
 
     def usage(self):
         self.parser.print_help()
