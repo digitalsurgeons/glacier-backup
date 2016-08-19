@@ -15,7 +15,7 @@ config = {
     'long_description_markdown_filename': 'README.md',
     'keywords': 'backup glacier aws rotation',
     'author': 'Digital Surgeons',
-    'url': 'https://github.com/dsurgeons/glacier-backup',
+    'url': 'https://github.com/digitalsurgeons/glacier-backup',
     'version': '0.1.0',
     'packages': ['glacierbackup'],
     'entry_points': {
