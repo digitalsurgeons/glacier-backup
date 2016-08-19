@@ -38,7 +38,9 @@ class GlacierBackup:
             normpath(self.args.destination + '/' + basename(file))
         )
 
-        # self.cloud_driver.upload(self.args.vault, file)
+        if self.args.vault:
+            self.cloud_driver.upload(self.args.vault, file_copy)
+
         self.rotator.rotate(file_copy, extension)
 
         # Clean up
