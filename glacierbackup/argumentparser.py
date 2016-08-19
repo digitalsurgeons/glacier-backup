@@ -18,13 +18,14 @@ class GlacierBackupArgumentParser:
             action="store_true"
         )
         self.parser.add_argument(
-            '--destination',
-            metavar='D',
-            help='The path you wish to save backups to'
+            'file',
+            metavar='src',
+            help='file to generate archive from'
         )
         self.parser.add_argument(
-            'file',
-            help='file to generate archive from'
+            'destination',
+            metavar='dest',
+            help='The path you wish to save backups to'
         )
 
     def get_args(self):
