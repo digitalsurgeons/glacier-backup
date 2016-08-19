@@ -24,9 +24,9 @@ config = {
         ],
     },
     'install_requires': ['archive-rotator', 'boto3'],
-    'extras_require': [
+    'extras_require': {
         'test': ['nose'],
-    ],
+    },
     'classifiers': [
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
