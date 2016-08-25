@@ -13,11 +13,11 @@ class GlacierBackupGlacierClient:
             self.glacier_client = None
             self.logger.warning('No credentials found for upload to glacier')
 
-    def upload(self, vault, file):
+    def upload(self, vault, file, description):
         if self.glacier_client is not None:
             archive_meta = self.glacier_client.upload_archive(
                 vaultName=vault,
-                archiveDescription='Test',
+                archiveDescription=description,
                 body=file
             )
 
