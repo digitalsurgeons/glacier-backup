@@ -12,3 +12,29 @@ Here is an example invocation with cron executing every day at 1am, archiving an
 
 
 You can use `glacier-backup --help` to view the options available to you.
+
+## Tasks for getting information on uploaded vaults:
+
+### Begin a vault inventory task:
+
+```
+aws glacier initiate-job --account-id - --vault-name my-vault --job-parameters '{"Type": "inventory-retrieval"}'
+```
+
+Make sure to replace vault-name with the name of your vault
+
+### Check on a vault inventory task
+
+```
+aws glacier describe-job --account-id - --vault-name my-vault --job-id qtjE_VcVXWojWR9UkmTJ1kvtAzyRABKk3c2OYGD8HcC40X7K7LvhZxjZ-2X71TaH5LR5byKaXk_ONURpa2RG_kBQ2AHj
+```
+
+Replace the argument for the job ID you were passed in the first command, and replace the vault name with your vault name
+
+### Get the result of a vault inventory task
+
+```
+aws glacier get-job-output --account-id - --vault-name my-vault --job-id zbxcm3Z_3z5UkoroF7SuZKrxgGoDc3RloGduS7Eg-RO47Yc6FxsdGBgf_Q2DK5Ejh18CnTS5XW4_XqlNHS61dsO4CnMW output.json
+```
+
+Replace the argument for the job ID you were passed in the first command, and replace the vault 
