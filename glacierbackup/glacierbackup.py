@@ -33,11 +33,11 @@ class GlacierBackup:
             extension += '.xz'
             to_delete.append(file)
 
-		// Choose a destination filename based on whether a filename argument was passed
-		if  self.args.fname:
-			filename = self.args.fname
-		else:
-			filename = basename(file)
+        # Choose a destination filename based on whether a filename argument was passed
+        if  self.args.fname:
+            filename = self.args.fname
+        else:
+            filename = basename(file)
 
         file_copy = copyfile(
             file,

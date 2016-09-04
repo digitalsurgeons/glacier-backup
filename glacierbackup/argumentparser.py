@@ -27,7 +27,7 @@ class GlacierBackupArgumentParser:
             metavar='dest',
             help='The path you wish to save backups to'
         )
-		self.parser.add_argument(
+        self.parser.add_argument(
             'description',
             metavar='desc',
             help='A description for the archive that will be stored in Amazon Glacer'
