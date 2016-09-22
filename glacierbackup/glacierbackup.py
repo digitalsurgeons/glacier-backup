@@ -33,13 +33,19 @@ class GlacierBackup:
             extension += '.xz'
             to_delete.append(file)
 
+        # Choose a destination filename based on whether a filename argument was passed
+        if  self.args.fname:
+            filename = self.args.fname
+        else:
+            filename = basename(file)
+
         file_copy = copyfile(
             file,
-            normpath(self.args.destination + '/' + basename(file))
+            normpath(self.args.destination + '/' + filename)
         )
 
         if self.args.vault:
-            self.cloud_driver.upload(self.args.vault, file_copy)
+            self.cloud_driver.upload(self.args.vault, file_copy, self.args.description)
 
         self.rotator.rotate(file_copy, extension)
 

@@ -18,6 +18,11 @@ class GlacierBackupArgumentParser:
             action="store_true"
         )
         self.parser.add_argument(
+            '--description',
+            metavar='D',
+            help='A description for the archive that will be stored in Amazon Glacer'
+        )
+        self.parser.add_argument(
             'file',
             metavar='src',
             help='file to generate archive from'
