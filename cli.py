@@ -9,7 +9,7 @@ def main():
     logging.basicConfig(
         # filename='glacer-backup.log',
         format='%(name)s:%(levelname)s:%(asctime)s: %(message)s',
-        level=logging.INFO
+        level=logging.WARNING
     )
 
     backup = GlacierBackup(
