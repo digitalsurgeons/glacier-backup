@@ -20,6 +20,7 @@ class GlacierBackup:
             file = self.args.file + '.tar'
             extension = '.tar'
             with tarfile.open(file, "w") as tar:
+                tar.ENCODING = 'utf-16'
                 tar.add(self.args.file)
                 tar.close()
             to_delete.append(file)
