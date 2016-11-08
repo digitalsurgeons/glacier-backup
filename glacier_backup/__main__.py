@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import logging
-from glacierbackup import *
+from glacier_backup import *
 
 
 def main():

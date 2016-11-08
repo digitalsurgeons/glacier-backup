@@ -10,17 +10,17 @@ with open('README.md') as readme_file:
 
 config = {
     'setup_requires': ['setuptools-markdown'],
-    'name': 'glacier-backup',
+    'name': 'glacier_backup',
     'description': 'Maintain backups locally (with rotation) and with glacier',
     'long_description_markdown_filename': 'README.md',
     'keywords': 'backup glacier aws rotation',
     'author': 'Digital Surgeons',
     'url': 'https://github.com/digitalsurgeons/glacier-backup',
     'version': '0.1.0',
-    'packages': ['glacierbackup'],
+    'packages': ['glacier_backup'],
     'entry_points': {
         'console_scripts': [
-            'glacier-backup=cli:main',
+            'glacier_backup=glacier_backup.__main__:main',
         ],
     },
     'install_requires': ['archive-rotator', 'boto3'],
