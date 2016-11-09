@@ -18,7 +18,7 @@ class GlacierBackup:
         # Tar it up if its a directory
         if isdir(self.args.file):
             file = self.args.file + '.tar'
-            subprocess.call(['tar', '-cf', file, self.args.file])
+            call(['tar', '-cf', file, self.args.file])
             to_delete.append(file)
         else:
             file = self.args.file
