@@ -1,8 +1,8 @@
 from shutil import copyfile
 from os.path import normpath, isdir, basename
 from os import remove
+from subprocess import call
 import lzma
-import tarfile
 
 
 class GlacierBackup:
@@ -18,11 +18,7 @@ class GlacierBackup:
         # Tar it up if its a directory
         if isdir(self.args.file):
             file = self.args.file + '.tar'
-            extension = '.tar'
-            with tarfile.open(file, "w") as tar:
-                tar.ENCODING = 'utf-16'
-                tar.add(self.args.file)
-                tar.close()
+            subprocess.call(['tar', '-cf', file, self.args.file])
             to_delete.append(file)
         else:
             file = self.args.file
