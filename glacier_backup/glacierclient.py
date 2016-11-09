@@ -25,6 +25,6 @@ class GlacierBackupGlacierClient:
             self.logger.info(
                 'Uploaded archive %s with glacier id %s to vault %s',
                 file,
-                archive_meta.archiveId,
+                archive_meta['archiveId'],
                 vault
             )
