@@ -17,11 +17,11 @@ class GlacierBackup:
 
         # Tar it up if its a directory
         if isdir(self.args.file):
-			tar_ext = '.tar'
-			tar_flags = '-cf'
-			if self.args.compress:
-				flags = '-czf'
-				tar_ext = '.tar.gz'
+            tar_ext = '.tar'
+            tar_flags = '-cf'
+            if self.args.compress:
+                flags = '-czf'
+                tar_ext = '.tar.gz'
             file = self.args.file + tar_ext
             call(['tar', flags, file, self.args.file])
             to_delete.append(file)
