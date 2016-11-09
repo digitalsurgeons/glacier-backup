@@ -30,8 +30,8 @@ class GlacierBackup:
             extension = ''
 
         # Choose a destination filename based on whether a filename argument was passed
-        if  self.args.fname:
-            filename = self.args.fname
+        if  self.args.destination:
+            filename = self.args.destination
         else:
             filename = basename(file)
 
