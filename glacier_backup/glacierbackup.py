@@ -29,11 +29,8 @@ class GlacierBackup:
             file = self.args.file
             extension = ''
 
-        # Choose a destination filename based on whether a filename argument was passed
-        if  self.args.destination:
-            filename = self.args.destination
-        else:
-            filename = basename(file)
+        # set filename to file base name
+        filename = basename(file)
 
         file_copy = copyfile(
             file,
