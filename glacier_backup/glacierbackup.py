@@ -17,18 +17,17 @@ class GlacierBackup:
 
         # Tar it up if its a directory
         if isdir(self.args.file):
-            file = self.args.file + '.tar'
-            call(['tar', '-cf', file, self.args.file])
+			tar_ext = '.tar'
+			tar_flags = '-cf'
+			if self.args.compress:
+				flags = '-czf'
+				tar_ext = '.tar.gz'
+            file = self.args.file + tar_ext
+            call(['tar', flags, file, self.args.file])
             to_delete.append(file)
         else:
             file = self.args.file
             extension = ''
-
-        # Compress it if asked to
-        if self.args.compress:
-            file = self.compress(file)
-            extension += '.xz'
-            to_delete.append(file)
 
         # Choose a destination filename based on whether a filename argument was passed
         if  self.args.fname:
@@ -49,9 +48,3 @@ class GlacierBackup:
         # Clean up
         for working_file in to_delete:
             remove(working_file)
-
-    def compress(self, file):
-        with lzma.open(file + '.xz', 'w') as outfile:
-            with open(file, 'rb') as infile:
-                outfile.write(infile.read())
-        return file + '.xz'
